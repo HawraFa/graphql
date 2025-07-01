@@ -118,9 +118,9 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 900px;
+  padding: 10px;
   margin: 0 auto;
-  padding: 20px;
   position: relative;
   z-index: 2;
 }
@@ -134,9 +134,9 @@ body {
   background: linear-gradient(135deg, rgba(147, 197, 253, 0.9), rgba(196, 181, 253, 0.9));
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  padding: 60px;
+  padding: 35px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
-  max-width: 600px;
+  max-width: 400px;
   margin: 50px auto;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -146,8 +146,8 @@ body {
 
 #login-container h2 {
   color: #4c1d95;
-  margin-bottom: 30px;
-  font-size: 2.25rem;
+  margin-bottom: 18px;
+  font-size: 1.5rem;
   font-weight: 600;
   text-shadow: 0 0 10px rgba(76, 29, 149, 0.3);
   font-family: 'Orbitron', sans-serif;
@@ -164,7 +164,7 @@ body {
   margin-bottom: 8px;
   color: #4c1d95;
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 1rem;
   text-shadow: 0 0 5px rgba(76, 29, 149, 0.2);
   font-family: 'Rajdhani', sans-serif;
   font-weight: 600;
@@ -173,10 +173,10 @@ body {
 
 input {
   width: 100%;
-  padding: 15px 20px;
+  padding: 10px 14px;
   border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.2);
   color: #1e293b;
@@ -199,9 +199,9 @@ button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #4c1d95;
   border: none;
-  padding: 15px 30px;
+  padding: 10px 18px;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -254,7 +254,7 @@ button:active {
 #profile-container h2 {
   color: #030103;
   margin-bottom: 40px;
-  font-size: 3rem;
+  font-size: 1.7rem;
   font-weight: 700;
   text-align: center;
   text-shadow: 0 0 20px rgba(76, 29, 149, 0.4);
@@ -476,7 +476,7 @@ button:active {
 }
 
 .graph-title {
-  font-size: 1.6rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #4c1d95;
   margin-bottom: 30px;
