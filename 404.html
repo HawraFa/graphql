@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 - Page Not Found | GraphQL Profile Dashboard</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: url('background.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Night Sky Elements */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .stars::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #ffffff, transparent);
+      background-repeat: repeat;
+      background-size: 200px 100px;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    .shooting-star {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: linear-gradient(45deg, #ffffff, transparent);
+      border-radius: 50%;
+      animation: shoot 3s linear infinite;
+      z-index: 1;
+    }
+
+    .shooting-star:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shooting-star:nth-child(2) {
+      top: 60%;
+      left: 20%;
+      animation-delay: 1.5s;
+    }
+
+    .shooting-star:nth-child(3) {
+      top: 40%;
+      left: 80%;
+      animation-delay: 3s;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translateX(0) translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(100px) translateY(100px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Error Container */
+    .error-container {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      backdrop-filter: blur(25px);
+      border-radius: 0;
+      padding: 60px 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .error-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      opacity: 0.8;
+    }
+
+    /* Error Number */
+    .error-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8rem;
+      font-weight: 900;
+      color: #4c1d95;
+      text-shadow: 0 0 30px rgba(76, 29, 149, 0.5);
+      margin-bottom: 20px;
+      letter-spacing: 5px;
+      line-height: 1;
+    }
+
+    /* Error Title */
+    .error-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #4c1d95;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(76, 29, 149, 0.3);
+      letter-spacing: 2px;
+    }
+
+    /* Error Message */
+    .error-message {
+      font-size: 1.2rem;
+      color: #4c1d95;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* Action Buttons */
+    .error-actions {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #4c1d95;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #4c1d95;
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-element:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      top: 70%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .floating-element:nth-child(3) {
+      bottom: 30%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-20px) scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .error-container {
+        padding: 40px 20px;
+        margin: 20px;
+      }
+
+      .error-number {
+        font-size: 5rem;
+        letter-spacing: 3px;
+      }
+
+      .error-title {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+      }
+
+      .error-message {
+        font-size: 1rem;
+      }
+
+      .error-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 250px;
+        padding: 12px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .error-number {
+        font-size: 4rem;
+      }
+
+      .error-title {
+        font-size: 1.3rem;
+      }
+
+      .error-message {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Night Sky Elements -->
+  <div class="stars"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  
+  <!-- Floating Elements -->
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+
+  <!-- Error Container -->
+  <div class="error-container">
+    <div class="error-number">404</div>
+    <h1 class="error-title">PAGE NOT FOUND</h1>
+    <p class="error-message">
+      Oops! It looks like you've ventured into uncharted territory. 
+      The page you're looking for seems to have drifted off into the cosmic void.
+    </p>
+    
+    <div class="error-actions">
+      <a href="/" class="btn">Return Home</a>
+      <button onclick="history.back()" class="btn btn-secondary">Go Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Add some interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click effect to buttons
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          // Create ripple effect
+          const ripple = document.createElement('span');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+          
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.classList.add('ripple');
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Add some dynamic star twinkling
+      setInterval(() => {
+        const stars = document.querySelectorAll('.floating-element');
+        stars.forEach(star => {
+          star.style.opacity = Math.random() * 0.8 + 0.2;
+        });
+      }, 2000);
+    });
+  </script>
+</body>
+</html> 

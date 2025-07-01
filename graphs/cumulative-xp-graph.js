@@ -1,8 +1,9 @@
 // --- Draw Cumulative XP by Project Graph ---
 function drawCumulativeXPGraph(data) {
-  const container = document.getElementById("cumulative-xp-graph");
-  if (!container || !data?.length) {
-    container.textContent = "No XP data";
+  const svgElement = document.getElementById("cumulative-xp-graph");
+  const container = svgElement.parentElement;
+  if (!svgElement || !data?.length) {
+    svgElement.textContent = "No XP data";
     return;
   }
 
@@ -35,11 +36,11 @@ function drawCumulativeXPGraph(data) {
   });
 
   if (points.length === 0) {
-    container.textContent = "No valid project data";
+    svgElement.textContent = "No valid project data";
     return;
   }
 
-  const width = container.clientWidth || 800;
+  const width = svgElement.clientWidth || 800;
   const height = 380; // Increased height to make it bigger
   const padding = { top: 60, right: 140, bottom: 120, left: 100 }; // Increased bottom padding for longer names
 
@@ -117,8 +118,8 @@ function drawCumulativeXPGraph(data) {
   const tooltip = document.createElement("div");
   Object.assign(tooltip.style, {
     position: "absolute",
-    background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-    color: "#1e293b",
+    background: "rgba(0, 0, 0, 0.8)",
+    color: "#ffffff",
     padding: "16px 20px",
     borderRadius: "12px",
     fontSize: "14px",
@@ -127,8 +128,8 @@ function drawCumulativeXPGraph(data) {
     opacity: 0,
     transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
     zIndex: 1000,
-    boxShadow: "0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1)",
-    border: "1px solid rgba(226, 232, 240, 0.8)",
+    boxShadow: "0 20px 40px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.3)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
     backdropFilter: "blur(20px)",
     minWidth: "180px",
     textAlign: "center",
@@ -138,9 +139,9 @@ function drawCumulativeXPGraph(data) {
 
   const showTooltip = (x, y, text) => {
     tooltip.innerHTML = `
-      <div style="margin-bottom: 8px; font-weight: 600; color: #3B82F6; font-size: 16px;">${text.project}</div>
-      <div style="background: linear-gradient(135deg, #3B82F6, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 20px; font-weight: 700; margin-bottom: 4px;">${text.xp.toLocaleString()} XP</div>
-      <div style="font-size: 12px; color: #64748b; font-weight: 400;">Cumulative Total</div>
+      <div style="margin-bottom: 8px; font-weight: 600; color: #60a5fa; font-size: 16px;">${text.project}</div>
+      <div style="background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 20px; font-weight: 700; margin-bottom: 4px;">${text.xp.toLocaleString()} XP</div>
+      <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: 400;">Cumulative Total</div>
     `;
     
     // Position tooltip to avoid going off-screen
@@ -181,7 +182,7 @@ function drawCumulativeXPGraph(data) {
     line.setAttribute("y1", y);
     line.setAttribute("x2", width - padding.right);
     line.setAttribute("y2", y);
-    line.setAttribute("stroke", i === 0 ? "#e2e8f0" : "#f1f5f9");
+    line.setAttribute("stroke", i === 0 ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.1)");
     line.setAttribute("stroke-width", i === 0 ? "2" : "1");
     line.setAttribute("stroke-dasharray", i === 0 ? "none" : "4,4");
     svg.appendChild(line);
@@ -192,8 +193,9 @@ function drawCumulativeXPGraph(data) {
     label.setAttribute("text-anchor", "end");
     label.setAttribute("font-size", "12");
     label.setAttribute("font-weight", "500");
-    label.setAttribute("fill", "#64748b");
-    label.setAttribute("font-family", "'Inter', -apple-system, BlinkMacSystemFont, sans-serif");
+    label.setAttribute("fill", "#4c1d95");
+    label.setAttribute("font-family", "'Rajdhani', sans-serif");
+    label.setAttribute("font-weight", "600");
     label.textContent = value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value.toLocaleString();
     svg.appendChild(label);
   }
@@ -207,8 +209,9 @@ function drawCumulativeXPGraph(data) {
     label.setAttribute("text-anchor", "middle");
     label.setAttribute("font-size", "11");
     label.setAttribute("font-weight", "500");
-    label.setAttribute("fill", "#475569");
-    label.setAttribute("font-family", "'Inter', -apple-system, BlinkMacSystemFont, sans-serif");
+    label.setAttribute("fill", "#4c1d95");
+    label.setAttribute("font-family", "'Rajdhani', sans-serif");
+    label.setAttribute("font-weight", "600");
     
     // Always rotate labels for better readability and to fit longer names
     label.setAttribute("transform", `rotate(-30 ${x},${height - padding.bottom + 45})`);
@@ -314,9 +317,10 @@ function drawCumulativeXPGraph(data) {
   title.setAttribute("text-anchor", "middle");
   title.setAttribute("font-size", "20");
   title.setAttribute("font-weight", "700");
-  title.setAttribute("fill", "#1e293b");
-  title.setAttribute("font-family", "'Inter', -apple-system, BlinkMacSystemFont, sans-serif");
-  title.setAttribute("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
+  title.setAttribute("fill", "#4c1d95");
+  title.setAttribute("font-family", "'Orbitron', sans-serif");
+  title.setAttribute("font-weight", "700");
+  title.setAttribute("filter", "drop-shadow(0 2px 4px rgba(76, 29, 149, 0.3))");
   title.textContent = "Cumulative XP Progress";
   svg.appendChild(title);
 
@@ -327,8 +331,9 @@ function drawCumulativeXPGraph(data) {
   subtitle.setAttribute("text-anchor", "middle");
   subtitle.setAttribute("font-size", "12");
   subtitle.setAttribute("font-weight", "400");
-  subtitle.setAttribute("fill", "#64748b");
-  subtitle.setAttribute("font-family", "'Inter', -apple-system, BlinkMacSystemFont, sans-serif");
+  subtitle.setAttribute("fill", "#4c1d95");
+  subtitle.setAttribute("font-family", "'Rajdhani', sans-serif");
+  subtitle.setAttribute("font-weight", "500");
   subtitle.textContent = "Track your learning journey across projects";
   svg.appendChild(subtitle);
 
@@ -339,12 +344,16 @@ function drawCumulativeXPGraph(data) {
   yAxisLabel.setAttribute("text-anchor", "middle");
   yAxisLabel.setAttribute("font-size", "12");
   yAxisLabel.setAttribute("font-weight", "500");
-  yAxisLabel.setAttribute("fill", "#64748b");
-  yAxisLabel.setAttribute("font-family", "'Inter', -apple-system, BlinkMacSystemFont, sans-serif");
+  yAxisLabel.setAttribute("fill", "#4c1d95");
+  yAxisLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+  yAxisLabel.setAttribute("font-weight", "600");
   yAxisLabel.setAttribute("transform", `rotate(-90, ${-height / 2}, 15)`);
   yAxisLabel.textContent = "Cumulative XP";
   svg.appendChild(yAxisLabel);
 
-  container.innerHTML = "";
-  container.appendChild(svg);
+  svgElement.innerHTML = "";
+  svgElement.appendChild(svg);
+  
+  // Add download dropdown
+  createDownloadDropdown(container, svg, 'cumulative_xp_graph');
 } 

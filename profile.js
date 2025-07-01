@@ -8,6 +8,9 @@ async function showProfile() {
   loginContainer.classList.add("hidden");
   profileContainer.classList.remove("hidden");
 
+  // Enable scrolling on dashboard/profile
+  document.body.classList.remove('no-scroll');
+
   // Show loading message
   userDetails.innerHTML = '<p class="loading">Loading user information...</p>';
 
@@ -292,7 +295,7 @@ async function showProfile() {
 
   // Draw graphs
   if (xpTransactionsData && xpTransactionsData.data) drawCumulativeXPGraph(xpTransactionsData.data.transaction);
-  if (xpTransactionsData && xpTransactionsData.data) drawSkillsGraph(xpTransactionsData.data.transaction);
+  drawSkillsGraph();
   const auditData = await fetchGraphQL(
     `
     query {
@@ -329,8 +332,17 @@ if (auditPoints.up > 0 || auditPoints.down > 0) {
 const auditRatioValue = document.getElementById('audit-ratio-value');
 if (auditRatioValue) {
   let ratio = auditPoints.down > 0 ? (auditPoints.up / auditPoints.down) : 0;
-  // Round up to the next tenth
-  let roundedRatio = auditPoints.down > 0 ? Math.ceil(ratio * 10) / 10 : 0;
+  // Custom rounding: only round up if the second decimal is 5 or more
+  function roundAuditRatio(val) {
+    const tenth = Math.floor(val * 10) / 10;
+    const secondDecimal = Math.floor((val * 100) % 10);
+    if (secondDecimal >= 5) {
+      return (tenth + 0.1);
+    } else {
+      return tenth;
+    }
+  }
+  let roundedRatio = auditPoints.down > 0 ? roundAuditRatio(ratio) : 0;
   auditRatioValue.textContent = auditPoints.down > 0 ? roundedRatio.toFixed(1) : '--';
 }
 // Fetch and display last 5 audits

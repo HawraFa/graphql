@@ -108,6 +108,9 @@ function logout() {
   document.getElementById("usernameEmail").value = "";
   document.getElementById("password").value = "";
   loginError.classList.add("hidden");
+  
+  // Disable scrolling on login page
+  document.body.classList.add('no-scroll');
 }
 
 // --- Helper: GraphQL fetch ---
@@ -154,6 +157,9 @@ logoutBtn.addEventListener("click", logout);
 
 // Try auto-login if JWT present
 window.addEventListener("load", () => {
+  // Disable scrolling on login page by default
+  document.body.classList.add('no-scroll');
+  
   const token = localStorage.getItem("jwtToken");
   console.log("Retrieved token from localStorage:", token);
   console.log("Token parts:", token ? token.split('.').length : 'No token');
@@ -161,4 +167,28 @@ window.addEventListener("load", () => {
     jwtToken = token;
     showProfile();
   }
-}); 
+});
+
+// Route checking functionality for 404 handling
+function checkRoute() {
+  const validRoutes = ['/', '/index.html', '/login', '/profile', '/404.html']; // Add all your valid routes
+  const currentPath = window.location.pathname;
+  
+  // Check if the current path is valid
+  if (!validRoutes.includes(currentPath)) {
+    // Check if it's a file extension that doesn't exist
+    if (currentPath.includes('.html') || currentPath.includes('.js') || currentPath.includes('.css')) {
+      window.location.href = '/404.html';
+      return;
+    }
+    
+    // For other invalid routes, redirect to 404
+    window.location.href = '/404.html';
+  }
+}
+
+// Call this on page load
+window.addEventListener('load', checkRoute);
+
+// Also check on navigation (for single-page app behavior)
+window.addEventListener('popstate', checkRoute); 

@@ -621,3 +621,14 @@ window.addEventListener("load", () => {
   }
 });
 
+// Add this at the bottom of your app.js
+window.addEventListener('load', () => {
+  // Check if the current path is invalid
+  const validPaths = ['/', '/index.html', '/404.html'];
+  const currentPath = window.location.pathname;
+  
+  if (!validPaths.includes(currentPath)) {
+    window.location.href = '/404.html';
+  }
+});
+

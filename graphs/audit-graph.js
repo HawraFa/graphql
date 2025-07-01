@@ -11,8 +11,17 @@ function drawAuditGraph(auditData) {
   const upPoints = Math.round(auditData.up);
   const downPoints = Math.round(auditData.down);
   const ratio = upPoints / downPoints;
-  // Round up to the next tenth
-  const roundedRatio = Math.ceil(ratio * 10) / 10;
+  // Custom rounding: only round up if the second decimal is 5 or more
+  function roundAuditRatio(val) {
+    const tenth = Math.floor(val * 10) / 10;
+    const secondDecimal = Math.floor((val * 100) % 10);
+    if (secondDecimal >= 5) {
+      return (tenth + 0.1);
+    } else {
+      return tenth;
+    }
+  }
+  const roundedRatio = roundAuditRatio(ratio);
 
   // Set viewBox for responsive scaling
   const viewBoxWidth = 800;
@@ -41,7 +50,7 @@ function drawAuditGraph(auditData) {
   // Create gradient definitions
   const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
   
-  // Given audits gradient (modern blue)
+  // Given audits gradient (cosmic blue)
   const upGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
   upGradient.setAttribute("id", "upGradient");
   upGradient.setAttribute("x1", "0%");
@@ -51,16 +60,16 @@ function drawAuditGraph(auditData) {
   
   const upStop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
   upStop1.setAttribute("offset", "0%");
-  upStop1.setAttribute("stop-color", "#3B82F6");
+  upStop1.setAttribute("stop-color", "#60a5fa");
   const upStop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
   upStop2.setAttribute("offset", "100%");
-  upStop2.setAttribute("stop-color", "#1D4ED8");
+  upStop2.setAttribute("stop-color", "#3b82f6");
   
   upGradient.appendChild(upStop1);
   upGradient.appendChild(upStop2);
   defs.appendChild(upGradient);
 
-  // Received audits gradient (modern purple)
+  // Received audits gradient (cosmic purple)
   const downGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
   downGradient.setAttribute("id", "downGradient");
   downGradient.setAttribute("x1", "0%");
@@ -70,10 +79,10 @@ function drawAuditGraph(auditData) {
   
   const downStop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
   downStop1.setAttribute("offset", "0%");
-  downStop1.setAttribute("stop-color", "#8B5CF6");
+  downStop1.setAttribute("stop-color", "#a78bfa");
   const downStop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
   downStop2.setAttribute("offset", "100%");
-  downStop2.setAttribute("stop-color", "#7C3AED");
+  downStop2.setAttribute("stop-color", "#8b5cf6");
   
   downGradient.appendChild(downStop1);
   downGradient.appendChild(downStop2);
@@ -91,12 +100,12 @@ function drawAuditGraph(auditData) {
   ratioBg.setAttribute("y", ratioY - 25);
   ratioBg.setAttribute("width", 160);
   ratioBg.setAttribute("height", 50);
-  ratioBg.setAttribute("fill", "rgba(59, 130, 246, 0.1)");
+  ratioBg.setAttribute("fill", "rgba(96, 165, 250, 0.15)");
   ratioBg.setAttribute("rx", "12");
   ratioBg.setAttribute("ry", "12");
-  ratioBg.setAttribute("stroke", "#3B82F6");
+  ratioBg.setAttribute("stroke", "#60a5fa");
   ratioBg.setAttribute("stroke-width", "2");
-  ratioBg.setAttribute("filter", "drop-shadow(0 4px 8px rgba(59, 130, 246, 0.2))");
+  ratioBg.setAttribute("filter", "drop-shadow(0 4px 12px rgba(96, 165, 250, 0.4))");
   svg.appendChild(ratioBg);
 
   // Ratio text with enhanced typography
@@ -107,8 +116,8 @@ function drawAuditGraph(auditData) {
   ratioText.setAttribute("dominant-baseline", "middle");
   ratioText.setAttribute("font-size", "22");
   ratioText.setAttribute("font-weight", "800");
-  ratioText.setAttribute("fill", "#1E40AF");
-  ratioText.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+  ratioText.setAttribute("fill", "#4c1d95");
+  ratioText.setAttribute("font-family", "'Orbitron', sans-serif");
   ratioText.textContent = roundedRatio.toFixed(1);
   svg.appendChild(ratioText);
 
@@ -119,8 +128,9 @@ function drawAuditGraph(auditData) {
   ratioLabel.setAttribute("text-anchor", "middle");
   ratioLabel.setAttribute("font-size", "12");
   ratioLabel.setAttribute("font-weight", "600");
-  ratioLabel.setAttribute("fill", "#374151");
-  ratioLabel.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+  ratioLabel.setAttribute("fill", "#4c1d95");
+  ratioLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+  ratioLabel.setAttribute("font-weight", "600");
   ratioLabel.textContent = "AUDIT RATIO";
   svg.appendChild(ratioLabel);
 
@@ -139,7 +149,7 @@ function drawAuditGraph(auditData) {
   
   // Draw timeline axis
   svg.appendChild(
-    createLine(timelineStart, timelineY, timelineEnd, timelineY, "#374151", 2)
+    createLine(timelineStart, timelineY, timelineEnd, timelineY, "rgba(255, 255, 255, 0.5)", 2)
   );
   
   // Draw scale markers and labels
@@ -148,7 +158,7 @@ function drawAuditGraph(auditData) {
     
     // Draw marker line
     svg.appendChild(
-      createLine(markerX, timelineY - 8, markerX, timelineY + 8, "#374151", 1)
+      createLine(markerX, timelineY - 8, markerX, timelineY + 8, "rgba(255, 255, 255, 0.5)", 1)
     );
     
     // Draw marker label
@@ -158,8 +168,9 @@ function drawAuditGraph(auditData) {
     markerLabel.setAttribute("text-anchor", "middle");
     markerLabel.setAttribute("font-size", "12");
     markerLabel.setAttribute("font-weight", "500");
-    markerLabel.setAttribute("fill", "#6B7280");
-    markerLabel.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+    markerLabel.setAttribute("fill", "#4c1d95");
+    markerLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+    markerLabel.setAttribute("font-weight", "600");
     markerLabel.textContent = marker.toLocaleString();
     svg.appendChild(markerLabel);
   });
@@ -174,7 +185,7 @@ function drawAuditGraph(auditData) {
   upBar.setAttribute("fill", "url(#upGradient)");
   upBar.setAttribute("rx", "12");
   upBar.setAttribute("ry", "12");
-  upBar.setAttribute("filter", "drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3))");
+  upBar.setAttribute("filter", "drop-shadow(0 6px 16px rgba(96, 165, 250, 0.5))");
   svg.appendChild(upBar);
 
   // Received audits bar
@@ -186,7 +197,7 @@ function drawAuditGraph(auditData) {
   downBar.setAttribute("fill", "url(#downGradient)");
   downBar.setAttribute("rx", "12");
   downBar.setAttribute("ry", "12");
-  downBar.setAttribute("filter", "drop-shadow(0 4px 12px rgba(139, 92, 246, 0.3))");
+  downBar.setAttribute("filter", "drop-shadow(0 6px 16px rgba(167, 139, 250, 0.5))");
   svg.appendChild(downBar);
 
   // Add enhanced value labels on bars
@@ -196,8 +207,9 @@ function drawAuditGraph(auditData) {
   upLabel.setAttribute("dominant-baseline", "middle");
   upLabel.setAttribute("font-size", "16");
   upLabel.setAttribute("font-weight", "700");
-  upLabel.setAttribute("fill", "#1E40AF");
-  upLabel.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+  upLabel.setAttribute("fill", "#4c1d95");
+  upLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+  upLabel.setAttribute("font-weight", "700");
   upLabel.textContent = upPoints.toLocaleString();
   svg.appendChild(upLabel);
 
@@ -207,8 +219,9 @@ function drawAuditGraph(auditData) {
   downLabel.setAttribute("dominant-baseline", "middle");
   downLabel.setAttribute("font-size", "16");
   downLabel.setAttribute("font-weight", "700");
-  downLabel.setAttribute("fill", "#5B21B6");
-  downLabel.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+  downLabel.setAttribute("fill", "#4c1d95");
+  downLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+  downLabel.setAttribute("font-weight", "700");
   downLabel.textContent = downPoints.toLocaleString();
   svg.appendChild(downLabel);
 
@@ -220,8 +233,9 @@ function drawAuditGraph(auditData) {
   upBarLabel.setAttribute("dominant-baseline", "middle");
   upBarLabel.setAttribute("font-size", "14");
   upBarLabel.setAttribute("font-weight", "600");
-  upBarLabel.setAttribute("fill", "#1E40AF");
-  upBarLabel.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+  upBarLabel.setAttribute("fill", "#4c1d95");
+  upBarLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+  upBarLabel.setAttribute("font-weight", "600");
   upBarLabel.textContent = "Done";
   svg.appendChild(upBarLabel);
 
@@ -232,8 +246,9 @@ function drawAuditGraph(auditData) {
   downBarLabel.setAttribute("dominant-baseline", "middle");
   downBarLabel.setAttribute("font-size", "14");
   downBarLabel.setAttribute("font-weight", "600");
-  downBarLabel.setAttribute("fill", "#5B21B6");
-  downBarLabel.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
+  downBarLabel.setAttribute("fill", "#4c1d95");
+  downBarLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
+  downBarLabel.setAttribute("font-weight", "600");
   downBarLabel.textContent = "Received";
   svg.appendChild(downBarLabel);
 
@@ -242,7 +257,10 @@ function drawAuditGraph(auditData) {
   for (let i = 1; i <= 4; i++) {
     const gridX = margin.left + gridStep * i;
     svg.appendChild(
-      createLine(gridX, margin.top, gridX, timelineY, "#F3F4F6", 1)
+      createLine(gridX, margin.top, gridX, timelineY, "rgba(255, 255, 255, 0.1)", 1)
     );
   }
+  
+  // Add download dropdown
+  createDownloadDropdown(svg.parentElement, svg, 'audit_graph');
 } 
