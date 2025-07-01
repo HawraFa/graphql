@@ -81,13 +81,13 @@ function drawCumulativeXPGraph(data) {
   
   const stop1 = document.createElementNS(svgNS, "stop");
   stop1.setAttribute("offset", "0%");
-  stop1.setAttribute("stop-color", "#3B82F6");
+  stop1.setAttribute("stop-color", "#1e293b");
   const stop2 = document.createElementNS(svgNS, "stop");
   stop2.setAttribute("offset", "50%");
-  stop2.setAttribute("stop-color", "#8B5CF6");
+  stop2.setAttribute("stop-color", "#1a0533");
   const stop3 = document.createElementNS(svgNS, "stop");
   stop3.setAttribute("offset", "100%");
-  stop3.setAttribute("stop-color", "#EC4899");
+  stop3.setAttribute("stop-color", "#701a75");
   
   lineGradient.appendChild(stop1);
   lineGradient.appendChild(stop2);
@@ -104,10 +104,10 @@ function drawCumulativeXPGraph(data) {
   
   const areaStop1 = document.createElementNS(svgNS, "stop");
   areaStop1.setAttribute("offset", "0%");
-  areaStop1.setAttribute("stop-color", "rgba(59, 130, 246, 0.3)");
+  areaStop1.setAttribute("stop-color", "rgba(26, 5, 51, 0.3)");
   const areaStop2 = document.createElementNS(svgNS, "stop");
   areaStop2.setAttribute("offset", "100%");
-  areaStop2.setAttribute("stop-color", "rgba(59, 130, 246, 0.05)");
+  areaStop2.setAttribute("stop-color", "rgba(26, 5, 51, 0.05)");
   
   areaGradient.appendChild(areaStop1);
   areaGradient.appendChild(areaStop2);
@@ -193,7 +193,7 @@ function drawCumulativeXPGraph(data) {
     label.setAttribute("text-anchor", "end");
     label.setAttribute("font-size", "12");
     label.setAttribute("font-weight", "500");
-    label.setAttribute("fill", "#4c1d95");
+    label.setAttribute("fill", "#1a0533");
     label.setAttribute("font-family", "'Rajdhani', sans-serif");
     label.setAttribute("font-weight", "600");
     label.textContent = value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value.toLocaleString();
@@ -209,7 +209,7 @@ function drawCumulativeXPGraph(data) {
     label.setAttribute("text-anchor", "middle");
     label.setAttribute("font-size", "11");
     label.setAttribute("font-weight", "500");
-    label.setAttribute("fill", "#4c1d95");
+    label.setAttribute("fill", "#1a0533");
     label.setAttribute("font-family", "'Rajdhani', sans-serif");
     label.setAttribute("font-weight", "600");
     
@@ -317,7 +317,7 @@ function drawCumulativeXPGraph(data) {
   title.setAttribute("text-anchor", "middle");
   title.setAttribute("font-size", "20");
   title.setAttribute("font-weight", "700");
-  title.setAttribute("fill", "#4c1d95");
+  title.setAttribute("fill", "#1a0533");
   title.setAttribute("font-family", "'Orbitron', sans-serif");
   title.setAttribute("font-weight", "700");
   title.setAttribute("filter", "drop-shadow(0 2px 4px rgba(76, 29, 149, 0.3))");
@@ -331,7 +331,7 @@ function drawCumulativeXPGraph(data) {
   subtitle.setAttribute("text-anchor", "middle");
   subtitle.setAttribute("font-size", "12");
   subtitle.setAttribute("font-weight", "400");
-  subtitle.setAttribute("fill", "#4c1d95");
+  subtitle.setAttribute("fill", "#1a0533");
   subtitle.setAttribute("font-family", "'Rajdhani', sans-serif");
   subtitle.setAttribute("font-weight", "500");
   subtitle.textContent = "Track your learning journey across projects";
@@ -344,7 +344,7 @@ function drawCumulativeXPGraph(data) {
   yAxisLabel.setAttribute("text-anchor", "middle");
   yAxisLabel.setAttribute("font-size", "12");
   yAxisLabel.setAttribute("font-weight", "500");
-  yAxisLabel.setAttribute("fill", "#4c1d95");
+  yAxisLabel.setAttribute("fill", "#1a0533");
   yAxisLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
   yAxisLabel.setAttribute("font-weight", "600");
   yAxisLabel.setAttribute("transform", `rotate(-90, ${-height / 2}, 15)`);

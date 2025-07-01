@@ -96,8 +96,8 @@ async function drawSkillsGraph() {
       });
       const polygon = document.createElementNS(svgNS, "polygon");
       polygon.setAttribute("points", points.map(p => p.join(",")).join(" "));
-      polygon.setAttribute("fill", l % 2 === 0 ? "rgba(76, 29, 149, 0.1)" : "rgba(76, 29, 149, 0.05)");
-      polygon.setAttribute("stroke", "rgba(76, 29, 149, 0.3)");
+      polygon.setAttribute("fill", l % 2 === 0 ? "rgba(26, 5, 51, 0.1)" : "rgba(26, 5, 51, 0.05)");
+      polygon.setAttribute("stroke", "rgba(26, 5, 51, 0.3)");
       polygon.setAttribute("stroke-width", "1");
       svg.appendChild(polygon);
     }
@@ -112,7 +112,7 @@ async function drawSkillsGraph() {
       line.setAttribute("y1", cy);
       line.setAttribute("x2", x);
       line.setAttribute("y2", y);
-      line.setAttribute("stroke", "rgba(76, 29, 149, 0.4)");
+      line.setAttribute("stroke", "rgba(26, 5, 51, 0.4)");
       line.setAttribute("stroke-width", "1");
       svg.appendChild(line);
     });
@@ -128,7 +128,7 @@ async function drawSkillsGraph() {
       label.setAttribute("text-anchor", "middle");
       label.setAttribute("font-size", "14");
       label.setAttribute("font-family", "'Segoe UI', system-ui, sans-serif");
-      label.setAttribute("fill", "#4c1d95");
+      label.setAttribute("fill", "#1a0533");
       label.setAttribute("font-family", "'Rajdhani', sans-serif");
       label.setAttribute("font-weight", "600");
       label.textContent = skill;

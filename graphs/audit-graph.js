@@ -79,10 +79,10 @@ function drawAuditGraph(auditData) {
   
   const downStop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
   downStop1.setAttribute("offset", "0%");
-  downStop1.setAttribute("stop-color", "#a78bfa");
+  downStop1.setAttribute("stop-color", "#6d28d9");
   const downStop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
   downStop2.setAttribute("offset", "100%");
-  downStop2.setAttribute("stop-color", "#8b5cf6");
+  downStop2.setAttribute("stop-color", "#4c1d95");
   
   downGradient.appendChild(downStop1);
   downGradient.appendChild(downStop2);
