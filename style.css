@@ -1395,6 +1395,10 @@ svg {
     padding: 6vw 4vw;
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    backdrop-filter: none !important;
+  }
+  #basic-info {
+    backdrop-filter: none !important;
   }
   #profile-container {
     padding: 2vw 0.5vw;
