@@ -40,9 +40,16 @@ function drawCumulativeXPGraph(data) {
     return;
   }
 
+  // Responsive adjustments for mobile
+  let isMobile = window.innerWidth <= 500;
+  let mobilePadding = { top: 30, right: 20, bottom: 60, left: 40 };
+  let mobileHeight = 220;
+  let mobileFontSize = 8;
+  let mobileLabelStep = 2; // Show every 2nd label if too many
+
   const width = svgElement.clientWidth || 800;
-  const height = 380; // Increased height to make it bigger
-  const padding = { top: 60, right: 140, bottom: 120, left: 100 }; // Increased bottom padding for longer names
+  const height = isMobile ? mobileHeight : 380;
+  const padding = isMobile ? mobilePadding : { top: 60, right: 140, bottom: 120, left: 100 };
 
   const xps = points.map(p => p.xp);
   const maxXP = Math.max(...xps);
@@ -202,22 +209,21 @@ function drawCumulativeXPGraph(data) {
 
   // X-axis labels with better spacing and full names
   points.forEach((p, i) => {
+    // On mobile, skip some labels if there are too many
+    if (isMobile && points.length > 8 && i % mobileLabelStep !== 0) return;
     const x = padding.left + i * stepX;
     const label = document.createElementNS(svgNS, "text");
     label.setAttribute("x", x);
-    label.setAttribute("y", height - padding.bottom + 45);
+    label.setAttribute("y", height - padding.bottom + (isMobile ? 22 : 45));
     label.setAttribute("text-anchor", "middle");
-    label.setAttribute("font-size", "11");
+    label.setAttribute("font-size", isMobile ? mobileFontSize : "11");
     label.setAttribute("font-weight", "500");
     label.setAttribute("fill", "#1a0533");
     label.setAttribute("font-family", "'Rajdhani', sans-serif");
     label.setAttribute("font-weight", "600");
-    
     // Always rotate labels for better readability and to fit longer names
-    label.setAttribute("transform", `rotate(-30 ${x},${height - padding.bottom + 45})`);
+    label.setAttribute("transform", `rotate(-30 ${x},${height - padding.bottom + (isMobile ? 22 : 45)})`);
     label.setAttribute("text-anchor", "end");
-    
-    // Show full project names without truncation
     label.textContent = p.label;
     svg.appendChild(label);
   });
@@ -313,9 +319,9 @@ function drawCumulativeXPGraph(data) {
   // Enhanced title with better styling
   const title = document.createElementNS(svgNS, "text");
   title.setAttribute("x", width / 2);
-  title.setAttribute("y", 30);
+  title.setAttribute("y", isMobile ? 18 : 30);
   title.setAttribute("text-anchor", "middle");
-  title.setAttribute("font-size", "20");
+  title.setAttribute("font-size", isMobile ? 13 : "20");
   title.setAttribute("font-weight", "700");
   title.setAttribute("fill", "#1a0533");
   title.setAttribute("font-family", "'Orbitron', sans-serif");
@@ -327,9 +333,9 @@ function drawCumulativeXPGraph(data) {
   // Add subtitle
   const subtitle = document.createElementNS(svgNS, "text");
   subtitle.setAttribute("x", width / 2);
-  subtitle.setAttribute("y", 50);
+  subtitle.setAttribute("y", isMobile ? 32 : 50);
   subtitle.setAttribute("text-anchor", "middle");
-  subtitle.setAttribute("font-size", "12");
+  subtitle.setAttribute("font-size", isMobile ? 8 : "12");
   subtitle.setAttribute("font-weight", "400");
   subtitle.setAttribute("fill", "#1a0533");
   subtitle.setAttribute("font-family", "'Rajdhani', sans-serif");
