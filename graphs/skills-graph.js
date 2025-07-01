@@ -11,7 +11,6 @@ async function drawSkillsGraph() {
   svgElement.innerHTML = '<div class="loading">Loading skills data...</div>';
 
   try {
-    // Fetch skill data using your friend's query
     const skillsData = await fetchGraphQL(`
       query {
         skillTypes: transaction_aggregate(
