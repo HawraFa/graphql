@@ -210,7 +210,7 @@ function drawAuditGraph(auditData) {
   upLabel.setAttribute("fill", "#4c1d95");
   upLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
   upLabel.setAttribute("font-weight", "700");
-  upLabel.textContent = upPoints.toLocaleString();
+  upLabel.textContent = (upPoints / 1000000).toFixed(2) + " MB";
   svg.appendChild(upLabel);
 
   const downLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -222,7 +222,7 @@ function drawAuditGraph(auditData) {
   downLabel.setAttribute("fill", "#4c1d95");
   downLabel.setAttribute("font-family", "'Rajdhani', sans-serif");
   downLabel.setAttribute("font-weight", "700");
-  downLabel.textContent = downPoints.toLocaleString();
+  downLabel.textContent = (downPoints / 1000000).toFixed(2) + " MB";
   svg.appendChild(downLabel);
 
   // Add enhanced bar labels

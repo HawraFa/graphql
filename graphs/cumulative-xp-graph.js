@@ -10,7 +10,9 @@ function drawCumulativeXPGraph(data) {
   const getProjectName = (path) => {
     if (!path?.startsWith("/bahrain/bh-module/")) return null;
     if (path === "/bahrain/bh-module/piscine-js") return "piscine-js";
+    if (path === "/bahrain/bh-module/piscine-rust") return "piscine-rust";
     if (path.includes("piscine-js")) return null;
+    if (path.includes("piscine-rust")) return null;
     const match = path.match(/^\/bahrain\/bh-module\/([^\/]+)/);
     return match ? match[1] : null;
   };
